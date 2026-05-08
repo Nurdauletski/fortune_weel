@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimal Fortune Wheel</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div class="modal_wrapper">
+      <div class="modal">
+        <h2>Играем вопрос сектора 3</h2>
+        <button><span class="reload">&#x21bb;</span>Попробовать снова</button>
+      </div>
+    </div>
+    <div class="controls">
+      <input type="number" id="segmentsInput" value="17" min="2" max="50" />
+      <button id="updateBtn">Изменить количество</button>
+    </div>
+
+    <div class="wheel-wrapper">
+      <div class="pointer"></div>
+      <!-- <div class="glow"></div> -->
+      <div class="wheel">
+        <div class="ring"></div>
+        <div class="wheel-labels" id="labels"></div>
+        <div class="center"></div>
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>

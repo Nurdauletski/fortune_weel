@@ -1,0 +1,334 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* --- ОБНОВЛЕННЫЙ БЛОК ДЛЯ ФОНА --- */
+  /* Указываем путь к твоей фотографии */
+  background-image: url(./public/semei-1.jpg);
+
+  /* Изображение масштабируется, чтобы полностью закрыть body, сохраняя пропорции */
+  background-size: cover;
+
+  /* Центрируем изображение */
+  background-position: center;
+
+  /* Изображение не дублируется, если оно меньше экрана */
+  background-repeat: no-repeat;
+
+  /* Фиксируем фон, чтобы он не скроллился (если появится скролл на странице) */
+  background-attachment: fixed;
+
+  /* Добавляем легкое темное наложение поверх фото, чтобы колесо лучше читалось */
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: darken;
+  /* ---------------------------------- */
+
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.wheel-wrapper {
+  position: relative;
+  width: 700px;
+  height: 700px;
+}
+
+/* Стрелка */
+.pointer {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 40px solid #d6a15f;
+  z-index: 20;
+  filter: drop-shadow(0 0 10px rgba(255, 170, 80, 0.5));
+}
+
+/* Внешний свет */
+.glow {
+  width: 100%;
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  left: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(235, 41, 170, 0.993),
+    transparent 70%
+  );
+  animation: pulse 3s infinite ease-in-out;
+  /* z-index: 1000; */
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+/* Колесо */
+.wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  /* Обновленный градиент на 16 секций */
+
+  border: 14px solid #111;
+  box-shadow:
+    0 0 0 4px #d6a15f,
+    0 0 40px rgba(255, 160, 70, 0.3),
+    inset 0 0 40px rgba(0, 0, 0, 0.8);
+
+  transform: rotate(0deg);
+  transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
+  cursor: pointer;
+}
+
+/* Настройка цифр для 16 секций */
+.label {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Достаточно для двузначного числа */
+  height: 40px;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Центр */
+.center {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #e7b56f, #9a5d22 70%);
+
+  border: 8px solid #d6a15f;
+
+  box-shadow:
+    0 0 20px rgba(255, 170, 80, 0.35),
+    inset 0 0 20px rgba(0, 0, 0, 0.4);
+
+  z-index: 5; */
+}
+
+/* Линии в центре */
+.cross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140px;
+  height: 8px;
+  background: #d6a15f;
+  transform-origin: center;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 180, 90, 0.4);
+}
+
+.cross:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.cross:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Блики */
+.ring {
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 190, 120, 0.25);
+}
+
+/* Находим .wheel и обновляем эти свойства */
+.wheel {
+  /* ... твои старые свойства (width, height, background) оставляем ... */
+
+  /* УДАЛИ ЭТУ СТРОКУ: animation: spin 8s linear infinite; */
+
+  /* ДОБАВЬ ЭТИ СТРОКИ: */
+}
+
+/* Сделаем центр кликабельным */
+.center {
+  /* ... твои свойства ... */
+  cursor: pointer;
+  pointer-events: auto; /* Убедимся, что клики проходят */
+}
+
+/* CONTROLS */
+
+.controls {
+  /* Это самое важное — кнопки "всплывают" над страницей и не толкают колесо */
+  position: absolute;
+
+  /* Размещаем в левом верхнем углу */
+  top: 30px;
+  left: 30px;
+
+  /* Чтобы кнопки были в колонку, а не в ряд (по желанию) */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  /* Чтобы кнопки всегда были поверх колеса */
+  z-index: 100;
+}
+
+.controls input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #d6a15f;
+  background: #111;
+  color: #fff;
+  width: 70px;
+}
+
+.controls button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background: #d6a15f;
+  color: #2a1607;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.controls button:hover {
+  background: #f1c40f;
+  box-shadow: 0 0 15px rgba(214, 161, 95, 0.5);
+}
+
+.center {
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%, -50%); /* Идеальное центрирование */
+
+  border-radius: 50%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("./public/logo-1.png");
+  border: 6px solid #d6a15f; /* Золотой ободок */
+  box-shadow:
+    0 0 15px rgba(255, 170, 80, 0.4),
+    inset 0 0 10px rgba(0, 0, 0, 0.3);
+
+  cursor: pointer;
+  z-index: 20; /* Поверх цифр и кольца */
+}
+
+/* MODAL */
+.modal_wrapper {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8); /* Затемнение фона */
+  display: none; /* Скрыто по умолчанию */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+/* Класс для отображения (будем добавлять через JS) */
+.modal_wrapper.active {
+  display: flex;
+}
+
+.modal {
+  padding: 40px 60px;
+  background-color: rgba(
+    17,
+    17,
+    17,
+    0.9
+  ); /* Твой стиль без потери прозрачности */
+  border-radius: 20px;
+  border: 2px solid #d6a15f;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 30px rgba(214, 161, 95, 0.3);
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.modal button {
+  padding: 10px 25px;
+  background: #d6a15f;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+}
+.modal h2 {
+  font-size: 1.8rem;
+}
+.modal button {
+  font-size: 1.6rem;
+}
+
+@media (max-width: 780px) {
+  .wheel-wrapper {
+    width: 480px;
+    height: 480px;
+  }
+}
+@media (max-width: 560px) {
+  .wheel-wrapper {
+    width: 380px;
+    height: 380px;
+  }
+  .label {
+    width: 20px;
+    height: 20px;
+  }
+}
