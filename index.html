@@ -10,18 +10,23 @@
   <body>
     <div class="modal_wrapper">
       <div class="modal">
-        <h2>Играем вопрос сектора 3</h2>
+        <!-- <img width="200" src="./public/sec3.png" /> -->
+        <h2>Играем вопрос номер 3</h2>
         <button><span class="reload">&#x21bb;</span>Попробовать снова</button>
       </div>
     </div>
     <div class="controls">
       <div class="ctrl">
-        <input type="number" id="segmentsInput" value="6" min="2" max="50" />
+        <input type="number" id="segmentsInput" value="16" min="2" max="50" />
         <span>сегментов</span>
       </div>
       <div class="ctrl">
         <input type="number" id="durationInput" value="12" min="1" max="30" />
         <span>секунд</span>
+      </div>
+      <div class="ctrl">
+        <input type="number" id="stepInput" value="2" min="1" max="20" />
+        <span>Нумеровать каждый</span>
       </div>
       <button id="updateBtn">Обновить данные</button>
     </div>
@@ -32,9 +37,12 @@
       <div class="wheel">
         <div class="ring"></div>
         <div class="wheel-labels" id="labels"></div>
-        <div class="center"></div>
       </div>
     </div>
+
+    <div class="box"></div>
+    <div class="outside"></div>
+    <div class="center"></div>
     <script src="./main.js"></script>
   </body>
 </html>

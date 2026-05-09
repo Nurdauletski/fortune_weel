@@ -3,7 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+:root {
+  --circle-size: 90vh;
+  --circle-size-m: 90vw;
+}
 body {
   height: 100vh;
   display: flex;
@@ -12,7 +15,7 @@ body {
 
   /* --- ОБНОВЛЕННЫЙ БЛОК ДЛЯ ФОНА --- */
   /* Указываем путь к твоей фотографии */
-  background-image: url(./public/semei-3.jpg);
+  background-image: url(./public/semei-2.jpg);
 
   /* Изображение масштабируется, чтобы полностью закрыть body, сохраняя пропорции */
   background-size: cover;
@@ -35,14 +38,60 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* BOX */
+
+.box {
+  position: absolute;
+  z-index: -1;
+  width: calc(var(--circle-size) + 40px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background:
+    linear-gradient(45deg, transparent, transparent 40%, yellow),
+    linear-gradient(#566dee, #141414);
+  animation: rotate 1.5s linear infinite;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.box:before,
+.box:after {
+  content: " ";
+  position: absolute;
+  inset: 8px;
+  background: linear-gradient(#161616, #262626);
+  border-radius: inherit;
+}
+
+.box:before {
+  background: linear-gradient(45deg, transparent, transparent 40%, yellow);
+  filter: blur(32px);
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg) translate(-50%, -50%);
+    filter: hue-rotate(360deg);
+  }
+}
+
 .wheel-wrapper {
-  position: relative;
-  width: 700px;
-  height: 700px;
+  position: absolute;
+  width: var(--circle-size);
+  aspect-ratio: 1 / 1;
+}
+.wheel-wrapper::after {
+  position: absolute;
+  content: " ";
+  width: 100%;
+  background: url("./public/circle-out.png");
 }
 
 /* Стрелка */
 .pointer {
+  opacity: 0;
   position: absolute;
   top: -18px;
   left: 50%;
@@ -122,6 +171,7 @@ body {
   transform: rotate(0deg);
   transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
   cursor: pointer;
+  z-index: 1;
 }
 
 /* Настройка цифр для 16 секций */
@@ -132,9 +182,9 @@ body {
   align-items: center;
   width: 40px; /* Достаточно для двузначного числа */
   height: 40px;
-  color: #fff;
+  color: #ffc446;
   font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+  text-shadow: 1px 1px 3px rgba(119, 155, 95, 0.658);
   z-index: 10;
   pointer-events: none;
 }
@@ -148,64 +198,34 @@ body {
   }
 }
 
-/* Центр */
-.center {
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #e7b56f, #9a5d22 70%);
-
-  border: 8px solid #d6a15f;
-
-  box-shadow:
-    0 0 20px rgba(255, 170, 80, 0.35),
-    inset 0 0 20px rgba(0, 0, 0, 0.4);
-
-  z-index: 5; */
-}
-
-/* Линии в центре */
-.cross {
+/* Сова скрыта по умолчанию */
+.owl-hidden {
+  display: none;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 140px;
-  height: 8px;
-  background: #d6a15f;
-  transform-origin: center;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 180, 90, 0.4);
+  width: 100px; /* Размер совы */
+  z-index: 10;
 }
 
-.cross:nth-child(1) {
-  transform: translate(-50%, -50%) rotate(45deg);
+/* Класс, который мы добавим через JS при вращении */
+.owl-active {
+  display: block;
+  animation: owl-jump 0.5s infinite ease-in-out alternate;
 }
 
-.cross:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(-45deg);
+@keyframes owl-jump {
+  0% {
+    /* Сжатие внизу прыжка */
+    transform: scale(1.2, 0.8) translate(0, 0);
+  }
+  50% {
+    /* Растяжение в полете */
+    transform: scale(0.8, 1.2) translate(0, -50px);
+  }
+  100% {
+    /* Сжатие при приземлении в новой точке */
+    transform: scale(1.1, 0.9) translate(0, 0);
+  }
 }
-
-/* Блики */
-.ring {
-  position: absolute;
-  inset: 10px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 190, 120, 0.25);
-}
-
-/* Находим .wheel и обновляем эти свойства */
-.wheel {
-  /* ... твои старые свойства (width, height, background) оставляем ... */
-
-  /* УДАЛИ ЭТУ СТРОКУ: animation: spin 8s linear infinite; */
-
-  /* ДОБАВЬ ЭТИ СТРОКИ: */
-}
-
 /* Сделаем центр кликабельным */
 .center {
   /* ... твои свойства ... */
@@ -285,34 +305,123 @@ body {
     inset 0 0 10px rgba(0, 0, 0, 0.3);
 
   cursor: pointer;
-  z-index: 20; /* Поверх цифр и кольца */
+  z-index: 100; /* Поверх цифр и кольца */
+}
+.outside {
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--circle-size) + 20px);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%); /* Идеальное центрирование */
+
+  border-radius: 50%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("./public/circle_big.png");
+  z-index: 10;
 }
 
 /* MODAL */
+.modal {
+  /* УКАЖИТЕ СЮДА ПУТЬ К ВАШЕМУ ИЗОБРАЖЕНИЮ */
+  /* background-image: url('./path/to/your/modal_background.png'); */
+
+  /* Для примера используем заполнитель с золотой рамкой */
+  background-image: url("./public/pupup.png");
+
+  /* Важные настройки фона */
+  background-size: contain; /* Картинка полностью помещается */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent; /* Если у PNG прозрачные края */
+
+  /* Задайте точные размеры вашей картинки */
+  width: 100vh;
+  aspect-ratio: 1 / 1;
+
+  /* Позиционирование контента (h2 и button) внутри */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Центрировать по вертикали */
+  align-items: center; /* Центрировать по горизонтали */
+
+  /* Убираем стандартные стили окна, если были */
+  border: none;
+  box-shadow: none;
+  padding: 40px; /* Отступы от краев картинки, чтобы текст не вылезал */
+  box-sizing: border-box; /* Чтобы padding не увеличивал ширину */
+}
+
+/* 3. Стилизация текста поверх изображения */
+.modal h2 {
+  font-family: "Georgia", serif; /* Красивый шрифт */
+  color: #ffef62; /* Цвет текста под стиль колеса */
+  font-size: 52px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px; /* Отступ до кнопки */
+
+  /* Необязательно: легкая тень, чтобы текст лучше читался на пестром фоне */
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+}
+
+/* 4. Стилизация кнопки */
+.modal button {
+  background-color: #111; /* Черный */
+  color: #f5e0a0; /* Золотистый */
+  border: 2px solid #d1a34f; /* Золотая рамка */
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Отступ между иконкой и текстом */
+}
+
+/* Эффект при наведении на кнопку */
+.modal button:hover {
+  background-color: #b42d1d; /* Красный */
+  border-color: #f5e0a0; /* Золотистый */
+}
+
+/* Иконка перезагрузки */
+.reload {
+  font-size: 22px;
+}
+
 .modal_wrapper {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8); /* Затемнение фона */
-  display: none; /* Скрыто по умолчанию */
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 0;
   backdrop-filter: blur(5px);
+  transition: opacity 0.6s ease;
 }
 
-/* Класс для отображения (будем добавлять через JS) */
 .modal_wrapper.active {
   display: flex;
+  opacity: 1;
+  z-index: 1000;
 }
 
-.modal {
+/* .modal {
   padding: 40px 60px;
   background-color: rgba(
     17,
     17,
     17,
     0.9
-  ); /* Твой стиль без потери прозрачности */
+  ); 
   border-radius: 20px;
   border: 2px solid #d6a15f;
   text-align: center;
@@ -342,19 +451,29 @@ body {
 }
 .modal button {
   font-size: 1.6rem;
-}
+} */
 
 @media (max-width: 780px) {
   .wheel-wrapper {
-    width: 480px;
-    height: 480px;
+    width: var(--circle-size-m);
+    aspect-ratio: 1 / 1;
+  }
+  .outside {
+    width: calc(var(--circle-size-m) + 20px);
+    aspect-ratio: 1 / 1;
+  }
+  .box {
+    width: calc(var(--circle-size-m) + 20px);
+  }
+  .modal h2 {
+    font-size: 24px;
   }
 }
 @media (max-width: 560px) {
-  .wheel-wrapper {
+  /* .wheel-wrapper {
     width: 380px;
     height: 380px;
-  }
+  } */
   .label {
     width: 20px;
     height: 20px;
