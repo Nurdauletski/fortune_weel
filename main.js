@@ -4,6 +4,7 @@ const center = document.querySelector(".center");
 const segmentsInput = document.getElementById("segmentsInput");
 const updateBtn = document.getElementById("updateBtn");
 const durationInput = document.getElementById("durationInput");
+
 // Укажи правильный путь к файлу, который ты скачал
 const spinSound = new Audio("./public/audio.mp3");
 // Находим элементы модалки
@@ -11,6 +12,8 @@ const modalWrapper = document.querySelector(".modal_wrapper");
 const modalTitle = modalWrapper.querySelector("h2");
 const reloadBtn = modalWrapper.querySelector("button");
 
+// Находим стрелку
+const arrow = document.querySelector(".pointer"); // убедись, что класс совпадает с HTML
 // Если хочешь, чтобы звук зацикливался, пока крутится колесо:
 spinSound.loop = true;
 
@@ -106,6 +109,9 @@ center.addEventListener("click", () => {
   if (isSpinning) return;
   isSpinning = true;
 
+  // 1. Включаем "скольжение" стрелки
+  arrow.classList.add("animate");
+
   spinDuration = parseInt(durationInput.value) || 5; // Берем время кручения
   const durationMs = spinDuration * 1000; // Переводим в миллисекунды для setTimeout
   // Устанавливаем начальный transition, чтобы при первом же клике всё сработало
@@ -140,6 +146,9 @@ center.addEventListener("click", () => {
 
   setTimeout(() => {
     isSpinning = false;
+
+    // 2. Выключаем анимацию стрелки при остановке
+    arrow.classList.remove("animate");
     spinSound.pause();
 
     // 1. Получаем текущий угол поворота колеса (от 0 до 360)

@@ -12,7 +12,7 @@ body {
 
   /* --- ОБНОВЛЕННЫЙ БЛОК ДЛЯ ФОНА --- */
   /* Указываем путь к твоей фотографии */
-  background-image: url(./public/semei-1.jpg);
+  background-image: url(./public/semei-3.jpg);
 
   /* Изображение масштабируется, чтобы полностью закрыть body, сохраняя пропорции */
   background-size: cover;
@@ -54,6 +54,26 @@ body {
   border-top: 40px solid #d6a15f;
   z-index: 20;
   filter: drop-shadow(0 0 10px rgba(255, 170, 80, 0.5));
+}
+
+/* Анимация покачивания */
+@keyframes pointer-wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-25deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Класс, который мы будем включать через JS */
+.pointer.animate {
+  animation: pointer-wiggle 1s ease-in infinite;
 }
 
 /* Внешний свет */
