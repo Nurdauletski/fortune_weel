@@ -3,6 +3,7 @@ const labelsContainer = document.getElementById("labels");
 const center = document.querySelector(".center");
 const segmentsInput = document.getElementById("segmentsInput");
 const updateBtn = document.getElementById("updateBtn");
+const durationInput = document.getElementById("durationInput");
 // Укажи правильный путь к файлу, который ты скачал
 const spinSound = new Audio("./public/audio.mp3");
 // Находим элементы модалки
@@ -16,6 +17,7 @@ spinSound.loop = true;
 let currentRotation = 0;
 let isSpinning = false;
 let totalSegments = parseInt(segmentsInput.value);
+let spinDuration = parseInt(durationInput.value) || 5;
 
 const colors = ["#b42d1d", "#111"];
 const specialColor = "#0d7c4a";
@@ -76,6 +78,7 @@ updateBtn.addEventListener("click", () => {
   if (isSpinning) return;
 
   totalSegments = parseInt(segmentsInput.value);
+  spinDuration = parseInt(durationInput.value) || 5; // Считываем новое время
   currentRotation = 0;
 
   // 1. Временно убираем анимацию (transition)
@@ -95,7 +98,6 @@ updateBtn.addEventListener("click", () => {
     // --- ОСТАНОВКА ЗВУКА ---
     // Плавно затухает или просто прерывается:
     spinSound.pause();
-    wheel.style.transition = "transform 5s cubic-bezier(0.15, 0, 0.15, 1)";
   }, 50);
 });
 
@@ -104,6 +106,10 @@ center.addEventListener("click", () => {
   if (isSpinning) return;
   isSpinning = true;
 
+  spinDuration = parseInt(durationInput.value) || 5; // Берем время кручения
+  const durationMs = spinDuration * 1000; // Переводим в миллисекунды для setTimeout
+  // Устанавливаем начальный transition, чтобы при первом же клике всё сработало
+  wheel.style.transition = `transform ${spinDuration}s cubic-bezier(0.15, 0, 0.15, 1)`;
   spinSound.currentTime = 0; // Сбрасываем звук на начало
   spinSound.play();
 
@@ -131,6 +137,7 @@ center.addEventListener("click", () => {
   currentRotation += 360 - (currentRotation % 360) + stopAt;
 
   wheel.style.transform = `rotate(${currentRotation}deg)`;
+
   setTimeout(() => {
     isSpinning = false;
     spinSound.pause();
@@ -154,7 +161,7 @@ center.addEventListener("click", () => {
     // ОБНОВЛЯЕМ МОДАЛКУ И ПОКАЗЫВАЕМ
     modalTitle.innerText = `Играем вопрос сектора ${winningNumber}`;
     modalWrapper.classList.add("active");
-  }, 5000);
+  }, durationMs);
 });
 
 reloadBtn.addEventListener("click", () => {

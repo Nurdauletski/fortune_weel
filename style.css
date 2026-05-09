@@ -231,6 +231,14 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
+.controls .ctrl {
+  display: flex;
+  align-items: center;
+}
+.controls .ctrl span {
+  margin-left: 10px;
+  color: #fff;
+}
 
 .controls button:hover {
   background: #f1c40f;
@@ -242,8 +250,8 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 180px;
-  height: 180px;
+  width: 100px;
+  height: 100px;
   transform: translate(-50%, -50%); /* Идеальное центрирование */
 
   border-radius: 50%;
