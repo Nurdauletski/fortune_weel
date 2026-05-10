@@ -15,7 +15,7 @@ body {
 
   /* --- ОБНОВЛЕННЫЙ БЛОК ДЛЯ ФОНА --- */
   /* Указываем путь к твоей фотографии */
-  background-image: url(./public/semei-2.jpg);
+  background-image: url(./public/semei-1.jpg);
 
   /* Изображение масштабируется, чтобы полностью закрыть body, сохраняя пропорции */
   background-size: cover;
@@ -236,6 +236,7 @@ body {
 /* CONTROLS */
 
 .controls {
+  visibility: hidden;
   /* Это самое важное — кнопки "всплывают" над страницей и не толкают колесо */
   position: absolute;
 
