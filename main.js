@@ -8,7 +8,7 @@ const durationInput = document.getElementById("durationInput");
 let lastWinningSegmentIndex = null;
 
 // Укажи правильный путь к файлу, который ты скачал
-const spinSound = new Audio("./public/myaudio.mp3");
+const spinSound = new Audio("./public/myaudio2.mp3");
 
 // Находим элементы модалки
 const modalWrapper = document.querySelector(".modal_wrapper");
@@ -81,14 +81,17 @@ function initWheel() {
       `${borderColor} ${endColorAngle}deg ${endBorderAngle}deg`,
     ); // <--- ДОБАВЛЕНО
     // 2. Создаем элемент
+
+    // ... внутри цикла for (let i = 0; i < totalSegments; i++) ...
+
     const label = document.createElement("div");
     label.className = "label";
-    const segmentNumber = i + 1;
 
-    if (segmentNumber % step === 0) {
-      label.innerText = segmentNumber;
+    // ЛОГИКА: Если индекс четный (0, 2, 4...) и мы не превысили 6 чисел
+    if (i % 2 === 0) {
+      label.innerText = i / 2 + 1; // Выведет 1, 2, 3, 4, 5, 6
     } else {
-      label.innerText = " ";
+      label.innerText = " "; // Остальные пустые
     }
 
     // 3. МАТЕМАТИЧЕСКАЯ КОРРЕКЦИЯ
@@ -174,7 +177,7 @@ center.addEventListener("click", () => {
 
   do {
     // 1. Генерируем случайный индекс сегмента
-    randomSegmentIndex = Math.floor(Math.random() * totalSegments);
+    randomSegmentIndex = Math.floor(Math.random() * 6) * 2;
 
     // 2. Проверяем: равен ли он предыдущему?
   } while (randomSegmentIndex === lastWinningSegmentIndex); // <--- ИЗМЕНЕНО
@@ -226,7 +229,7 @@ center.addEventListener("click", () => {
     const degreesPerSegment = 360 / totalSegments;
 
     // Добавляем 1, так как индекс начинается с 0, а наши цифры с 1
-    const winningNumber = Math.floor(winningAngle / degreesPerSegment) + 1;
+    const winningNumber = randomSegmentIndex / 2 + 1;
 
     // --- ПЛАВНАЯ ОСТАНОВКА ЗВУКА ВМЕСТО ОБЫЧНОЙ ---
 
