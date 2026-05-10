@@ -8,7 +8,7 @@ const durationInput = document.getElementById("durationInput");
 let lastWinningSegmentIndex = null;
 
 // Укажи правильный путь к файлу, который ты скачал
-const spinSound = new Audio("./public/audio_new22.mp3");
+const spinSound = new Audio("./public/coleso-sound.mp3");
 
 // Находим элементы модалки
 const modalWrapper = document.querySelector(".modal_wrapper");
