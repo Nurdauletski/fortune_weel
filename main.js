@@ -62,7 +62,7 @@ function initWheel() {
   let gradientSteps = [];
 
   // Радиус, на котором висят цифры (настрой под себя)
-  const labelRadius = 170;
+  const labelRadius = window.innerWidth < 780 ? 80 : 170;
 
   for (let i = 0; i < totalSegments; i++) {
     // 1. Цвета и градиент (остаются как были)
