@@ -54,6 +54,40 @@ const borderWidthDegrees = 1.2; // Ширина границы в градуса
 //     }
 //   }, intervalTime);
 // }
+// --- ЛОГИКА ПЕРЕВОДА --- //
+const translations = {
+  ru: {
+    modalTitle: "Играем вопрос номер",
+    updateBtn: "Обновить",
+    reloadBtn: "Попробовать снова",
+    // добавь сюда другие тексты, если нужно
+  },
+  kz: {
+    modalTitle: "Қойылатын сұрақ нөмірі",
+    updateBtn: "Жаңарту",
+    reloadBtn: "Қайтадан көру",
+  },
+};
+
+let currentLang = "ru";
+
+const ruBtn = document.getElementById("ruBtn");
+const kzBtn = document.getElementById("kzBtn");
+
+function setLanguage(lang) {
+  currentLang = lang;
+
+  // Переключаем активный класс у кнопок
+  ruBtn.classList.toggle("active", lang === "ru");
+  kzBtn.classList.toggle("active", lang === "kz");
+
+  // Обновляем текст кнопки обновления (пример)
+  updateBtn.innerText = translations[lang].updateBtn;
+  reloadBtn.innerText = translations[lang].reloadBtn;
+}
+
+ruBtn.addEventListener("click", () => setLanguage("ru"));
+kzBtn.addEventListener("click", () => setLanguage("kz"));
 
 function initWheel() {
   labelsContainer.innerHTML = "";
@@ -234,7 +268,7 @@ center.addEventListener("click", () => {
     // --- ПЛАВНАЯ ОСТАНОВКА ЗВУКА ВМЕСТО ОБЫЧНОЙ ---
 
     // ОБНОВЛЯЕМ МОДАЛКУ И ПОКАЗЫВАЕМ
-    modalTitle.innerText = `Играем вопрос номер ${winningNumber}`;
+    modalTitle.innerText = `${translations[currentLang].modalTitle} ${winningNumber}`;
     modalWrapper.classList.add("active");
   }, durationMs);
 });
