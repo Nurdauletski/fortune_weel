@@ -340,7 +340,7 @@ body {
   background-color: transparent; /* Если у PNG прозрачные края */
 
   /* Задайте точные размеры вашей картинки */
-  width: 76vh;
+  width: 60vh;
   aspect-ratio: 1 / 1;
 
   /* Позиционирование контента (h2 и button) внутри */
@@ -360,7 +360,7 @@ body {
 .modal h2 {
   font-family: "Georgia", serif; /* Красивый шрифт */
   color: #ffef62; /* Цвет текста под стиль колеса */
-  font-size: 34px;
+  font-size: 28px;
   text-align: center;
   margin-top: 0;
   margin-bottom: 30px; /* Отступ до кнопки */
@@ -374,8 +374,8 @@ body {
   background-color: #111; /* Черный */
   color: #f5e0a0; /* Золотистый */
   border: 2px solid #d1a34f; /* Золотая рамка */
-  padding: 12px 22px;
-  font-size: 16px;
+  padding: 10px 20px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
