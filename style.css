@@ -340,7 +340,7 @@ body {
   background-color: transparent; /* Если у PNG прозрачные края */
 
   /* Задайте точные размеры вашей картинки */
-  width: 100vh;
+  width: 76vh;
   aspect-ratio: 1 / 1;
 
   /* Позиционирование контента (h2 и button) внутри */
@@ -360,7 +360,7 @@ body {
 .modal h2 {
   font-family: "Georgia", serif; /* Красивый шрифт */
   color: #ffef62; /* Цвет текста под стиль колеса */
-  font-size: 52px;
+  font-size: 34px;
   text-align: center;
   margin-top: 0;
   margin-bottom: 30px; /* Отступ до кнопки */
@@ -374,8 +374,8 @@ body {
   background-color: #111; /* Черный */
   color: #f5e0a0; /* Золотистый */
   border: 2px solid #d1a34f; /* Золотая рамка */
-  padding: 12px 24px;
-  font-size: 18px;
+  padding: 12px 22px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
@@ -501,11 +501,15 @@ body {
     width: calc(var(--circle-size-m) + 20px);
   }
   .modal {
-    width: 86%;
+    width: 80%;
     padding: 26px;
   }
   .modal h2 {
-    font-size: 24px;
+    font-size: 18px;
+  }
+  .modal button {
+    font-size: 14px;
+    padding: 10px 14px;
   }
 }
 @media (max-width: 560px) {

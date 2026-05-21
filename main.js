@@ -31,7 +31,7 @@ let totalSegments = parseInt(segmentsInput.value);
 let spinDuration = parseInt(durationInput.value) || 5;
 
 const colors = ["#b42d1d", "#111"];
-const specialColor = "#0d7c4a";
+// const specialColor = "#0d7c4a";
 const borderColor = "#d1a34f"; // Цвет границы (например, золотой, как рама) // <--- ДОБАВЛЕНО
 const borderWidthDegrees = 1.2; // Ширина границы в градусах (подбери на глаз) // <--- ДОБАВЛЕНО
 
@@ -101,7 +101,7 @@ function initWheel() {
   for (let i = 0; i < totalSegments; i++) {
     // 1. Цвета и градиент (остаются как были)
     let color = colors[i % colors.length];
-    if (i === 0) color = specialColor;
+    // if (i === 0) color = specialColor;
     const startColorAngle = i * degreesPerSegment + borderWidthDegrees / 2; // <--- ИЗМЕНЕНО
     const endColorAngle = (i + 1) * degreesPerSegment - borderWidthDegrees / 2; // <--- ИЗМЕНЕНО
     gradientSteps.push(`${color} ${startColorAngle}deg ${endColorAngle}deg`);
