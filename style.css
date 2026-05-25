@@ -4,8 +4,8 @@
   box-sizing: border-box;
 }
 :root {
-  --circle-size: 90vh;
-  --circle-size-m: 90vw;
+  --circle-size: 74vh;
+  --circle-size-m: 85vw;
 }
 body {
   height: 100vh;
